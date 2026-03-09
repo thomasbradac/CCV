@@ -8,6 +8,7 @@ public class validateCard
 		static long cardNumber;
 		public static void main(String[] args) throws IOException
 			{
+				readTextFile();
 				Scanner userIntInput = new Scanner(System.in);
 				System.out.println("Welcome! Would you like to:");
 				System.out.println("(1) Check a card number.");
@@ -17,12 +18,18 @@ public class validateCard
 				if (choice == 1)
 					{
 						userCheck();
-						System.out.println(cardTest(cardNumber));
+						if (cardTest(cardNumber) == true)
+							{
+								System.out.println("That is a valid card number!");
+							}
+						else
+							{
+								System.out.println("That is not a valid card number!");
+							}
 					}
 				else if (choice == 2)
 					{
-						readTextFile();
-						cardTest(cardNumber);
+						loopCards();						
 					}
 				else
 					{
@@ -30,7 +37,7 @@ public class validateCard
 					}
 			}
 		
-		public static void userCheck()
+		public static void userCheck() throws IOException
 		{
 			Scanner userLongInput = new Scanner(System.in);
 			System.out.println("Please enter the credit card number to see if it's valid.");
@@ -50,7 +57,7 @@ public class validateCard
 			
 		}
 		
-		public static boolean cardTest(long cardNumber)
+		public static boolean cardTest(long cardNumber) throws IOException
 		{
 			//fill array with CC#
 			String cardString = String.valueOf(cardNumber);
@@ -89,7 +96,25 @@ public class validateCard
 			return false;
 		}
 		
+		public static void loopCards() throws IOException
+		{
+			int falseCards = 0;
+			int trueCards = 0;
 			
+			for (int i = 0; i < cardNumbers.size(); i++)
+				{
+					if (cardTest(cardNumbers.get(i)) == true)
+						{
+							trueCards++;
+						}
+					else
+						{
+							falseCards++;
+						}
+				}
+			System.out.println("There are " + trueCards +  " potentially valid card numbers \n and " + falseCards + " invalid card numbers in the text file you attached.");
+			
+		}
 		
 		
 		//Step 1. Double alternating digits starting with the first digit in the sequence.
