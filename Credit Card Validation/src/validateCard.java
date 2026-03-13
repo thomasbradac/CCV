@@ -20,7 +20,7 @@ public class validateCard
 						userCheck();
 						if (cardTest(cardNumber) == true)
 							{
-								System.out.println("That is a valid card number!");
+								System.out.println("That is a potentially valid card number!");
 							}
 						else
 							{
@@ -74,21 +74,23 @@ public class validateCard
 			//Step 2. If the doubling resulted in a number with two digits, add them together to get a single digit number
 					if (digits[i] >= 10)
 						{
-							String digitString = String.valueOf(digits[i]);
-							int firstDigit = digitString.charAt(0);
-							int secondDigit = digitString.charAt(1);
-							digits[i] = firstDigit + secondDigit;		
+							digits[i] = (digits[i]/10) + (digits[i] % 10);		
 						}
 				}
 			
+			
+			//Step 3. Now go back to the original credit number and replace the digits that you doubled with the new value ï¿½ either the doubled value, or the doubled value with the digits added together ï¿½ and add it all up.
+			//Step 3 is actually not necessary, because I just need to make a sum and test the sum. 
 			//Step 4. Check to see if the sum is evenly divisible by 10 (you can simply look to see whether or not it ends with a zero).
-			long finalNumber = 0;
-			for (int i = 0; i < 16; i+=2)
+			int sum = 0;
+			
+			
+			for (int i = 0; i < 16; i++)
 				{
-					finalNumber = (finalNumber * 10) + digits[i]; 
+					sum+=digits[i];
 			
 				}
-			if (finalNumber % 10 == 0)
+			if (sum % 10 == 0)
 				{
 					return true;
 				}
@@ -105,11 +107,13 @@ public class validateCard
 				{
 					if (cardTest(cardNumbers.get(i)) == true)
 						{
-							trueCards++;
+						System.out.println(cardNumbers.get(i) + "  potentially valid");	
+						trueCards++;
 						}
 					else
 						{
-							falseCards++;
+						System.out.println(cardNumbers.get(i) + "  invalid");		
+						falseCards++;
 						}
 				}
 			System.out.println("There are " + trueCards +  " potentially valid card numbers \n and " + falseCards + " invalid card numbers in the text file you attached.");
@@ -119,7 +123,7 @@ public class validateCard
 		
 		//Step 1. Double alternating digits starting with the first digit in the sequence.
 		//Step 2. If the doubling resulted in a number with two digits, add them together to get a single digit number
-		//Step 3. Now go back to the original credit number and replace the digits that you doubled with the new value — either the doubled value, or the doubled value with the digits added together — and add it all up.
+		//Step 3. Now go back to the original credit number and replace the digits that you doubled with the new value ï¿½ either the doubled value, or the doubled value with the digits added together ï¿½ and add it all up.
 		//Step 4. Check to see if the sum is evenly divisible by 10 (you can simply look to see whether or not it ends with a zero).
 
 
